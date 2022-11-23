@@ -130,6 +130,17 @@ session_start();
       redirect($text);
     }
   }
+  function EditarProduto($cdCat, $descProd, $imagem, $link, $nome, $valor){
+    $sql = 'INSERT INTO produto(cd_categoria, cd_produto, ds_produto, imagem, link, nome, valor) VALUES ("'.$cdCat.'", null, "'.$descProd.'", "'.$imagem.'", "'.$link.'", "'.$nome.'", "'.$valor.'")';
+    $res = $GLOBALS['conn']->query($sql);
+    if($res){
+      $text = 'Produto cadastrado com sucesso!!!';
+      redirect($text);
+    } else{
+      $text = 'Erro ao cadastrar produto!!!';
+      redirect($text);
+    }
+  }
   function MostrarProduto(){
     $sql = 'SELECT * FROM produto';
     $res = $GLOBALS['conn']->query($sql);
@@ -141,12 +152,12 @@ session_start();
               <tr>
                 <td id="tdProd">'.$row['cd_produto'].'</td>
                 <td id="tdProd">'.$row['nome'].'</td>
-                <td id="tdProd">'.$row['valor'].'</td>
+                <td id="tdProd">R$'.$row['valor'].'</td>
                 <td id="tdProd">
                   <a href="index.php?removeProd='.$row['cd_produto'].'&nomeProd='.$row['nome'].'" style="text-decoration: none">
                     <img src="img/lixeira.png" alt="" width="25px" />
                   </a>
-                  <a href="produto.php?codigo='.$row['cd_produto'].'" style="text-decoration: none">
+                  <a href="produto.php?codigo='.$row['cd_produto'].'" target="_blank" style="text-decoration: none">
                     <img src="img/escrever.png" alt="" width="25px" />
                   </a>
                 </td>
@@ -157,12 +168,12 @@ session_start();
               <tr>
                 <td id="tdProd" style="background-color: var(--fundo); color: var(--corPrimaria)">'.$row['cd_produto'].'</td>
                 <td id="tdProd" style="background-color: var(--fundo); color: var(--corPrimaria)">'.$row['nome'].'</td>
-                <td id="tdProd" style="background-color: var(--fundo); color: var(--corPrimaria)">'.$row['valor'].'</td>
+                <td id="tdProd" style="background-color: var(--fundo); color: var(--corPrimaria)">R$'.$row['valor'].'</td>
                 <td id="tdProd" style="background-color: var(--fundo); color: var(--corPrimaria)">
                   <a href="index.php?removeProd='.$row['cd_produto'].'&nomeProd='.$row['nome'].'" style="text-decoration: none">
                     <img src="img/lixeira.png" alt="" width="25px" />
                   </a>
-                  <a href="produto.php?codigo='.$row['cd_produto'].'" style="text-decoration: none">
+                  <a href="produto.php?codigo='.$row['cd_produto'].'" target="_blank" style="text-decoration: none">
                     <img src="img/escrever.png" alt="" width="25px" />
                   </a>
                 </td>
@@ -204,18 +215,70 @@ session_start();
               <p>Código do Produto: '.$row['cd_produto'].'</p>
               <p>Código da Categoria: '.$row['cd_categoria'].'</p>
               <p>Descrição do produto: '.$row['ds_produto'].'</p>
-              <p>Valor: '.$row['valor'].'</p>
+              <p>Valor: R$'.$row['valor'].'</p>
               <p>Link do instagram: '.$row['link'].'</p>
             </div>
           </div>
         ';
+        /*Formulário de edição*/
         echo '
-          <script>
-            document.getElementeById("descProd").innerHTML = "'.$row['ds_produto'].'"
-          </script>
+        <form action="" method="post" class="form">
+              <h3 id="titleForm">Editar produto</h3>
+              <p>Não é preciso preencher todos os dados novamente, apenas os que você deseja editar</p>
+              <label for="descProd" id="textDefault"
+                >Categoria do produto:</label
+              >
+              <input
+                type="text"
+                name="descProd"
+                id="descProd"
+                placeholder="Digite a descrição do produto:"
+                class="input"
+                value="'.$row['ds_produto'].'"
+              />
+              <input
+                type="file"
+                name="fileToUpload"
+                id="fileToUpload"
+                class="input"
+                value=""
+              />
+              <input
+                type="url"
+                name="linkProd"
+                id="linkProd"
+                placeholder="Coloque o link do instagram do produto:"
+                class="input"
+                value="'.$row['link'].'"
+              />
+              <input
+                type="text"
+                name="nomeProd"
+                id="nomeProdEdit"
+                placeholder="Digite o nome do produto:"
+                class="input"
+                value="'.$row['nome'].'"
+              />
+              <input
+                type="text"
+                name="valor"
+                id="valor"
+                placeholder="Digite o valor, Ex.: 40.00"
+                class="input"
+                value="'.$row['valor'].'"
+              />
+              <a href="">
+                <button onclick="produtoOpt()" type="submit" name="enviarCategoria" class="button">
+                  Enviar
+                </button>
+              </a>
         ';
       }
     }
+  }
+  EditarCategoriaProduto($cat, $cdprod){
+    $sql = 'UPDATE produto SET cd_categoria = "'.$cat.'" WHERE cd_produto ='.$cdprod;
+    $res = $GLOBALS['conn']->query($sql);
   }
   function ExcluirProduto($cd, $nome){
     $sql = 'DELETE FROM produto WHERE cd_produto ='.$cd;

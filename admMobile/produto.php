@@ -5,6 +5,9 @@
   if(isset($_POST['nomeProdEdit'])){
     EditarProduto($_POST['selectCat'], $_POST['descProd'], $file, $_POST['linkProd'], $_POST['nomeProdEdit'], $_POST['valor']);
   }
+  if(isset($_POST['selectCat'])){
+    EditarCategoriaProduto($_POST['selectCat'], $_GET['codigo']);
+  }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -111,12 +114,12 @@ a {
 }
 .card{
     display: flex;
-    width: 50vw;
+    width: 45vw;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 3rem;
-    gap: 3rem;
+    padding: 1.5rem;
+    gap: 2rem;
     border: 1px solid var(--corSecundaria);
     box-shadow: 5px 5px 4px rgb(129, 63, 206);
 }
@@ -130,7 +133,6 @@ p{
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: -1rem;
 }
 
 /* FORM */
@@ -229,55 +231,19 @@ input::file-selector-button:hover{
         <?php
             MostrarProdutoEspecifico($_GET['codigo']);
         ?>
-        <form action="" method="post" class="form">
-              <h3 id="titleForm">Cadastrar produto</h3>
-              <label for="descProd" id="textDefault"
-                >Categoria do produto:</label
-              >
-              <select name="selectCat" id="selectCat">
+        <form action="" method="post">
+        <h3 id="titleForm">Editar categoria do produto(opcional)</h3>
+        <select name="selectCat" id="selectCat">
                 <?php
                     MostrarCategoriaSelect();
                 ?>
               </select>
-              <input
-                type="text"
-                name="descProd"
-                id="descProd"
-                placeholder="Digite a descrição do produto:"
-                class="input"
-              />
-              <input
-                type="file"
-                name="fileToUpload"
-                id="fileToUpload"
-                class="input"
-              />
-              <input
-                type="url"
-                name="linkProd"
-                id="linkProd"
-                placeholder="Coloque o link do instagram do produto:"
-                class="input"
-              />
-              <input
-                type="text"
-                name="nomeProd"
-                id="nomeProd"
-                placeholder="Digite o nome do produto:"
-                class="input"
-              />
-              <input
-                type="text"
-                name="valor"
-                id="valor"
-                placeholder="Digite o valor, Ex.: 40.00"
-                class="input"
-              />
               <a href="">
-                <button onclick="produtoOpt()" type="submit" name="enviarCategoria" class="button">
+                <button onclick="" type="submit" name="editProd" class="button">
                   Enviar
                 </button>
               </a>
+        </form>
     </div>
 </body>
 </html>

@@ -25,7 +25,7 @@ CREATE TABLE produto(
 	ds_produto VARCHAR(100),
 	valor DECIMAL(5,2),
 	imagem VARCHAR(45), 
-	link VARCHAR(20),
+	link VARCHAR(120),
     FOREIGN KEY (cd_categoria) REFERENCES categoria(cd),
 	PRIMARY KEY (cd_produto)
 )DEFAULT CHARSET = utf8;
