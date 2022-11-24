@@ -17,6 +17,14 @@ session_start();
       </script>
     ';
   }
+  function redirectProd($text, $cod){
+    header("refresh: 0.1 , url = index.php");
+    echo '
+      <script>
+        alert("'.$text.'")
+      </script>
+    ';
+  }
   function CadastrarCategoria($name){
     $sql = 'INSERT INTO categoria VALUES (null, "'.$name.'")';
     $res = $GLOBALS['conn']->query($sql);
@@ -130,15 +138,16 @@ session_start();
       redirect($text);
     }
   }
-  function EditarProduto($cdCat, $descProd, $imagem, $link, $nome, $valor){
-    $sql = 'INSERT INTO produto(cd_categoria, cd_produto, ds_produto, imagem, link, nome, valor) VALUES ("'.$cdCat.'", null, "'.$descProd.'", "'.$imagem.'", "'.$link.'", "'.$nome.'", "'.$valor.'")';
+  /* EditarProduto($_POST['descProd'], $file, $_POST['linkProd'], $_POST['nomeProdEdit'], $_POST['valor']); */
+  function EditarProduto($descProd, $imagem, $link, $nome, $valor, $codigo){
+    $sql = 'UPDATE produto SET ds_produto='.$descProd.', imagem='.$imagem.', link='.$link.', nome='.$nome.', valor='.$valor.' WHERE cd_produto='.$codigo;
     $res = $GLOBALS['conn']->query($sql);
     if($res){
-      $text = 'Produto cadastrado com sucesso!!!';
-      redirect($text);
+      $text = 'Produto editado com sucesso!!!';
+      redirectProd($text, $codigo);
     } else{
-      $text = 'Erro ao cadastrar produto!!!';
-      redirect($text);
+      $text = 'Erro ao editar produto!!!';
+      redirectProd($text, $codigo);
     }
   }
   function MostrarProduto(){
@@ -225,9 +234,6 @@ session_start();
         <form action="" method="post" class="form">
               <h3 id="titleForm">Editar produto</h3>
               <p>Não é preciso preencher todos os dados novamente, apenas os que você deseja editar</p>
-              <label for="descProd" id="textDefault"
-                >Categoria do produto:</label
-              >
               <input
                 type="text"
                 name="descProd"
@@ -241,7 +247,7 @@ session_start();
                 name="fileToUpload"
                 id="fileToUpload"
                 class="input"
-                value=""
+                value="'.$row['imagem'].'"
               />
               <input
                 type="url"
@@ -267,18 +273,20 @@ session_start();
                 class="input"
                 value="'.$row['valor'].'"
               />
-              <a href="">
-                <button onclick="produtoOpt()" type="submit" name="enviarCategoria" class="button">
-                  Enviar
-                </button>
-              </a>
         ';
       }
     }
   }
-  EditarCategoriaProduto($cat, $cdprod){
+  function EditarCategoriaProduto($cat, $cdprod){
     $sql = 'UPDATE produto SET cd_categoria = "'.$cat.'" WHERE cd_produto ='.$cdprod;
     $res = $GLOBALS['conn']->query($sql);
+    if($res){
+      $text = 'Categoria de produto atualizada com sucesso!!!';
+      redirect($text);
+    } else{
+      $text = 'Categoria de produto atualizada sem sucesso!!!';
+      redirect($text);
+    }
   }
   function ExcluirProduto($cd, $nome){
     $sql = 'DELETE FROM produto WHERE cd_produto ='.$cd;

@@ -2,10 +2,10 @@
     include('funcoes.php');
 ?>
 <?php
-  if(isset($_POST['nomeProdEdit'])){
-    EditarProduto($_POST['selectCat'], $_POST['descProd'], $file, $_POST['linkProd'], $_POST['nomeProdEdit'], $_POST['valor']);
+  if(isset($_POST['descProd'])){
+    EditarProduto($_POST['descProd'], $file, $_POST['linkProd'], $_POST['nomeProdEdit'], $_POST['valor'], $_GET['codigo']);
   }
-  if(isset($_POST['selectCat'])){
+  if(isset($GET['editCatProd'])){
     EditarCategoriaProduto($_POST['selectCat'], $_GET['codigo']);
   }
 ?>
@@ -231,8 +231,17 @@ input::file-selector-button:hover{
         <?php
             MostrarProdutoEspecifico($_GET['codigo']);
         ?>
+        <?php
+          echo '
+          <a href="index.php?editProd=1">
+            <button type="submit" class="button">
+              Enviar
+            </button>
+          </a>
+          ';
+        ?>
         <form action="" method="post">
-        <h3 id="titleForm">Editar categoria do produto(opcional)</h3>
+        <h3 id="titleForm">Editar categoria do produto(opcional):</h3>
         <select name="selectCat" id="selectCat">
                 <?php
                     MostrarCategoriaSelect();
