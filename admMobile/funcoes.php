@@ -18,7 +18,7 @@ session_start();
     ';
   }
   function redirectProd($text, $cod){
-    header("refresh: 0.1 , url = index.php");
+    header("refresh: 0.1 , url = produto.php?codigo=".$cod);
     echo '
       <script>
         alert("'.$text.'")
@@ -139,14 +139,14 @@ session_start();
     }
   }
   /* EditarProduto($_POST['descProd'], $file, $_POST['linkProd'], $_POST['nomeProdEdit'], $_POST['valor']); */
-  function EditarProduto($descProd, $imagem, $link, $nome, $valor, $codigo){
-    $sql = 'UPDATE produto SET ds_produto='.$descProd.', imagem='.$imagem.', link='.$link.', nome='.$nome.', valor='.$valor.' WHERE cd_produto='.$codigo;
+  function EditarProduto($descProd, $link, $nome, $valor, $codigo){
+    $sql = 'UPDATE produto SET ds_produto="'.$descProd.'", link="'.$link.'", nome="'.$nome.'", valor='.$valor.' WHERE cd_produto='.$codigo;
     $res = $GLOBALS['conn']->query($sql);
     if($res){
       $text = 'Produto editado com sucesso!!!';
       redirectProd($text, $codigo);
     } else{
-      $text = 'Erro ao editar produto!!!';
+      $text = 'Erro ao editar produto!!!'.$sql;
       redirectProd($text, $codigo);
     }
   }
@@ -243,13 +243,6 @@ session_start();
                 value="'.$row['ds_produto'].'"
               />
               <input
-                type="file"
-                name="fileToUpload"
-                id="fileToUpload"
-                class="input"
-                value="'.$row['imagem'].'"
-              />
-              <input
                 type="url"
                 name="linkProd"
                 id="linkProd"
@@ -259,7 +252,7 @@ session_start();
               />
               <input
                 type="text"
-                name="nomeProd"
+                name="nomeProdEdit"
                 id="nomeProdEdit"
                 placeholder="Digite o nome do produto:"
                 class="input"

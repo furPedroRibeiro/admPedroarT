@@ -342,20 +342,20 @@ input::file-selector-button:hover{
   background-color: var(--corPrimaria);
   color: var(--corSecundaria);
 }
-.form select{
+.form #selectCat{
   width: 41vw;
   height: 3.5vh;
 
   outline: none;
-  padding: 3px;
+  padding: 1rem;
 
-  background-color: var(--fundo);
   color: var(--corSecundaria);
+  background-color: var(--fundo);
   border: 1px solid var(--corSecundaria);
 
   transition: width 0.7s;
 }
-.form select:focus{
+.form #selectCat:focus{
   width: 45vw;
   background-color: var(--corSecundaria);
   color: var(--corPrimaria);

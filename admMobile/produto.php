@@ -3,7 +3,7 @@
 ?>
 <?php
   if(isset($_POST['descProd'])){
-    EditarProduto($_POST['descProd'], $file, $_POST['linkProd'], $_POST['nomeProdEdit'], $_POST['valor'], $_GET['codigo']);
+    EditarProduto($_POST['descProd'], $_POST['linkProd'], $_POST['nomeProdEdit'], $_POST['valor'], $_GET['codigo']);
   }
   if(isset($GET['editCatProd'])){
     EditarCategoriaProduto($_POST['selectCat'], $_GET['codigo']);
