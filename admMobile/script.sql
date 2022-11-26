@@ -22,10 +22,10 @@ CREATE TABLE produto(
 	cd_produto INT NOT NULL AUTO_INCREMENT,
 	nome VARCHAR(45) NOT NULL,
     cd_categoria INT NOT NULL,
-	ds_produto VARCHAR(100),
+	ds_produto VARCHAR(150),
 	valor DECIMAL(5,2),
-	imagem VARCHAR(45), 
-	link VARCHAR(120),
+	imagem VARCHAR(200), 
+	link VARCHAR(200),
     FOREIGN KEY (cd_categoria) REFERENCES categoria(cd),
 	PRIMARY KEY (cd_produto)
 )DEFAULT CHARSET = utf8;

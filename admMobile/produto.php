@@ -3,9 +3,9 @@
 ?>
 <?php
   if(isset($_POST['descProd'])){
-    EditarProduto($_POST['descProd'], $_POST['linkProd'], $_POST['nomeProdEdit'], $_POST['valor'], $_GET['codigo']);
+    EditarProduto($_POST['descProd'], $_POST['linkImagem'], $_POST['linkProd'], $_POST['nomeProdEdit'], $_POST['valor'], $_GET['codigo']);
   }
-  if(isset($GET['editCatProd'])){
+  if(isset($_POST['editCatProd'])){
     EditarCategoriaProduto($_POST['selectCat'], $_GET['codigo']);
   }
 ?>
@@ -104,7 +104,6 @@ a {
 /* CARD */
 
 .content{
-    width: 100vw;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -114,11 +113,11 @@ a {
 }
 .card{
     display: flex;
-    width: 45vw;
+    width: 55vw;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1.5rem;
+    padding: 2rem;
     gap: 2rem;
     border: 1px solid var(--corSecundaria);
     box-shadow: 5px 5px 4px rgb(129, 63, 206);
@@ -127,12 +126,18 @@ p{
   color: var(--corSecundaria);
   font-size: 22px;
   font-weight: 450;
+  text-align: justify;
+  word-wrap: wrap;
 }
 .text{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    
     align-items: flex-start;
+    
+    text-align: justify;
+    word-wrap: wrap;
 }
 
 /* FORM */
@@ -238,9 +243,10 @@ input::file-selector-button:hover{
               Enviar
             </button>
           </a>
+          </form>
           ';
         ?>
-        <form action="" method="post">
+        <form action="" method="post" class="form">
         <h3 id="titleForm">Editar categoria do produto(opcional):</h3>
         <select name="selectCat" id="selectCat">
                 <?php
@@ -248,7 +254,7 @@ input::file-selector-button:hover{
                 ?>
               </select>
               <a href="">
-                <button onclick="" type="submit" name="editProd" class="button">
+                <button onclick="" type="submit" name="editCatProd" class="button">
                   Enviar
                 </button>
               </a>

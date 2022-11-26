@@ -1,26 +1,43 @@
 <?php
     include('funcoes.php');
-?>
-<?php
+
   if(isset($_POST['nomeCat'])){
     CadastrarCategoria($_POST['nomeCat']);
   }
-?>
-<?php
+  
   if(isset($_POST['nomeEditCat'])){
     EditarCategoria($_POST['nomeEditCat'], $_POST['selectCat']);
   }
-?>
-<?php
+
   $file = 'logo.png';
   if(isset($_POST['nomeProd'])){
-    CadastrarProduto($_POST['selectCat'], $_POST['descProd'], $file, $_POST['linkProd'], $_POST['nomeProd'], $_POST['valor']);
+    /*$target_dir = "img/produtos/";
+    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+    $uploadOk = 1;                        
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));                        
+                            
+                            
+                            
+    // Check if $uploadOk is set to 0 by an error                            
+    if ($uploadOk == 0) {                           
+        echo "Desculpe, seu arquivo não foi carregado.";                          
+        // if everything is ok, try to upload file                        
+    } else {                            
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            htmlspecialchars( basename( $_FILES["fileToUpload"]["name"]));
+        } else {                                                                            
+            echo "Desculpe, ocorreu um erro ao enviar seu arquivo.";
+        }
+    }
+    $_SESSION['nm_arquivo'] = basename($_FILES["fileToUpload"]["name"]);*/                      
+        
+    CadastrarProduto($_POST['selectCat'], $_POST['descProd'], $_POST['linkImagem'], $_POST['linkProd'], $_POST['nomeProd'], $_POST['valor']);
   }
-?>
-<?php
+
   if(isset($_GET['removeCat'])){
     ExcluirCategoria($_GET['removeCat'], $_GET['nomeCat']);
   }
+  
   if(isset($_GET['removeProd'])){
     ExcluirProduto($_GET['removeProd'], $_GET['nomeProd']);
   }
@@ -344,21 +361,21 @@ input::file-selector-button:hover{
 }
 .form #selectCat{
   width: 41vw;
-  height: 3.5vh;
+  height: auto;
 
   outline: none;
-  padding: 1rem;
+  padding: 7px;
 
-  color: var(--corSecundaria);
   background-color: var(--fundo);
   border: 1px solid var(--corSecundaria);
+  color: var(--corSecundaria);
 
   transition: width 0.7s;
 }
 .form #selectCat:focus{
-  width: 45vw;
   background-color: var(--corSecundaria);
   color: var(--corPrimaria);
+  width: 45vw;
 }
 
 /* CSS do footer */
@@ -458,7 +475,7 @@ input::file-selector-button:hover{
           <a href="zapPedro"><button class="button">Contato</button></a>
         </div>
         <div class="direita">
-          <img src="img/logo.PNG" alt="Logo da marca" width="300px" />
+          <img src="img/logo.png" alt="Logo da marca" width="300px" />
         </div>
       </div>
       <div class="administracao">
@@ -548,9 +565,10 @@ input::file-selector-button:hover{
                 class="input"
               />
               <input
-                type="file"
-                name="fileToUpload"
-                id="fileToUpload"
+                type="url"
+                name="linkImagem"
+                id="linkImagem"
+                placeholder="Endereço da imagem do produto:"
                 class="input"
               />
               <input
@@ -575,11 +593,10 @@ input::file-selector-button:hover{
                 class="input"
               />
               <a href="zapPedro">
-                <button onclick="produtoOpt()" type="submit" name="enviarCategoria" class="button">
+                <button type="submit" name="enviarProduto" class="button">
                   Enviar
                 </button>
               </a>
-              <h3 id="removeuProd" class="textDefault"></h3>
             </form>
             <table>
               <tr>

@@ -1,8 +1,8 @@
 <?php
-session_start();
-  $user = 'root';
-  $pass = '';
-  $banco = 'vitrine';
+  session_start();
+  $user = 'bairpfhw_melbbss';
+  $pass = 'Pep-25mai06';
+  $banco = 'bairpfhw_vitrine';
   $server = 'localhost';
   $conn = new mysqli($server, $user, $pass, $banco);
   if(!$conn){
@@ -139,8 +139,8 @@ session_start();
     }
   }
   /* EditarProduto($_POST['descProd'], $file, $_POST['linkProd'], $_POST['nomeProdEdit'], $_POST['valor']); */
-  function EditarProduto($descProd, $link, $nome, $valor, $codigo){
-    $sql = 'UPDATE produto SET ds_produto="'.$descProd.'", link="'.$link.'", nome="'.$nome.'", valor='.$valor.' WHERE cd_produto='.$codigo;
+  function EditarProduto($descProd, $imagem, $link, $nome, $valor, $codigo){
+    $sql = 'UPDATE produto SET ds_produto="'.$descProd.'", imagem="'.$imagem.'", link="'.$link.'", nome="'.$nome.'", valor='.$valor.' WHERE cd_produto='.$codigo;
     $res = $GLOBALS['conn']->query($sql);
     if($res){
       $text = 'Produto editado com sucesso!!!';
@@ -217,7 +217,7 @@ session_start();
         echo '
           <div class="card">
             <div class="img">
-              <img src="img/logo.png" width="200px"/>
+              <img src="'.$row['imagem'].'" width="300px"/>
             </div>
             <div class="text">
               <p>Nome do Produto: '.$row['nome'].'</p>
@@ -241,6 +241,14 @@ session_start();
                 placeholder="Digite a descrição do produto:"
                 class="input"
                 value="'.$row['ds_produto'].'"
+              />
+              <input
+                type="url"
+                name="linkImagem"
+                id="linkImagem"
+                placeholder="Endereço da imagem do produto:"
+                class="input"
+                value="'.$row['imagem'].'"
               />
               <input
                 type="url"
@@ -275,10 +283,10 @@ session_start();
     $res = $GLOBALS['conn']->query($sql);
     if($res){
       $text = 'Categoria de produto atualizada com sucesso!!!';
-      redirect($text);
+      redirectProd($text, $cdprod);
     } else{
       $text = 'Categoria de produto atualizada sem sucesso!!!';
-      redirect($text);
+      redirectProd($text, $cdprod);
     }
   }
   function ExcluirProduto($cd, $nome){
